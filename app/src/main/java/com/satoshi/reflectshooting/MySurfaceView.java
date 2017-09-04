@@ -37,6 +37,7 @@ import java.util.Random;
 public class MySurfaceView  extends SurfaceView
         implements SurfaceHolder.Callback, Runnable {
     Context cnt;
+    ReflectShooting rs = new ReflectShooting();
 
     private final int
             W = 480,
@@ -110,8 +111,6 @@ public class MySurfaceView  extends SurfaceView
     static InterstitialAd interstitialAd;
     // インタースティシャル用のView
     static View viewAd = null;
-
-    private boolean scoreSend = false;
 
 
     /////コンストラクタ/////
@@ -548,6 +547,7 @@ public class MySurfaceView  extends SurfaceView
                     scene = S_GAMEOVER;
                     goverStartTime = System.currentTimeMillis();
                     stopBGM();
+                    rs.sendScore(score);
                     ranking[10] = score;
                     rankSort(ranking);
                     for (int i = 0; i < 10; i++) {
@@ -577,9 +577,6 @@ public class MySurfaceView  extends SurfaceView
                 g.setColor(Color.WHITE);
                 g.drawBitmap(back, 0, 0);
                 g.setTextSize(40);
-
-                if(scoreSend == false) Games.Leaderboards.submitScore(googleApiClient,CgkIwr-QjMAKEAIQAA, score);
-
                 g.drawText("Score: " + score, W/5, H/2);
                 g.unlock();
             }

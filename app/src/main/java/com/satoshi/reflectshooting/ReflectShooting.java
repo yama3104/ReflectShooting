@@ -1,5 +1,6 @@
 package com.satoshi.reflectshooting;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.os.Bundle;
@@ -118,5 +119,9 @@ public class ReflectShooting extends Activity
                 mGoogleApiClient.connect();
             }
         }
+    }
+
+    public void sendScore(int score){
+        Games.Leaderboards.submitScore(mGoogleApiClient,"CgkIwr-QjMAKEAIQAA", score);
     }
 }
