@@ -122,6 +122,14 @@ public class ReflectShooting extends Activity
     }
 
     public void sendScore(int score){
-        Games.Leaderboards.submitScore(mGoogleApiClient,"CgkIwr-QjMAKEAIQAA", score);
+        if (mGoogleApiClient.isConnected()) {
+            Games.Leaderboards.submitScore(mGoogleApiClient,"CgkIwr-QjMAKEAIQAA", score);
+        }
+    }
+
+    public void showLeaderBoards(){
+        if (mGoogleApiClient.isConnected()){
+            startActivityForResult(Games.Leaderboards.getLeaderboardIntent(mGoogleApiClient,"CgkIwr-QjMAKEAIQAA"),10);
+        }
     }
 }

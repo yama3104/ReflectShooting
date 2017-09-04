@@ -72,7 +72,7 @@ public class MySurfaceView  extends SurfaceView
     private int damagedID, pressbtnID, reflectID, beateneID;
 
     private Bitmap title;
-    private Bitmap start_btn0, start_btn1, rank_btn0, rank_btn1;
+    private Bitmap start_btn0, start_btn1, rank_btn0, rank_btn1, onrank_btn0, onrank_btn1;
     private Bitmap bullet;
     private int px = W / 5;  //弾の位置のx成分
     private int py = H / 5;  //弾の位置のy成分
@@ -131,6 +131,8 @@ public class MySurfaceView  extends SurfaceView
         start_btn1 = BitmapFactory.decodeResource(r, R.drawable.start_btn1);
         rank_btn0 = BitmapFactory.decodeResource(r, R.drawable.rank_btn0);
         rank_btn1 = BitmapFactory.decodeResource(r, R.drawable.rank_btn1);
+        onrank_btn0 = BitmapFactory.decodeResource(r, R.drawable.onrank_btn0);
+        onrank_btn1 = BitmapFactory.decodeResource(r, R.drawable.onrank_btn1);
         heart = BitmapFactory.decodeResource(r, R.drawable.heart);
         secretBack = BitmapFactory.decodeResource(r, R.drawable.secretback);
         pause = BitmapFactory.decodeResource(r, R.drawable.pause);
@@ -274,11 +276,15 @@ public class MySurfaceView  extends SurfaceView
                 g.drawBitmap(title, 0, 0);
                 g.drawBitmap(start_btn0, 150, H * 3 / 5);
                 g.drawBitmap(rank_btn0, 150, H * 3 / 5 + 50);
+                g.drawBitmap(onrank_btn0, 150, H * 3 / 5 + 100);
                 if (150 < touchX && touchX < 330 && H * 3 / 5 < touchY && touchY < H * 3 / 5 + 30) {
                     g.drawBitmap(start_btn1, 150, H * 3 / 5);
                 }
                 if (150 < touchX && touchX < 330 && H * 3 / 5 + 50 < touchY && touchY < H * 3 / 5 + 80) {
                     g.drawBitmap(rank_btn1, 150, H * 3 / 5 + 50);
+                }
+                if (150 < touchX && touchX < 330 && H * 3/5 + 100 < touchY && touchY < H * 3 / 5 + 130) {
+                    g.drawBitmap(onrank_btn1, 150, H * 3/5 + 100);
                 }
                 g.unlock();
             } else if (scene == S_RANKING) {
@@ -621,6 +627,13 @@ public class MySurfaceView  extends SurfaceView
                     scene = S_RANKING;
                     playSE(pressbtnID);
                     rankStartTime = System.currentTimeMillis();
+                }
+            }
+            //オンラインランキングボタン
+            if (System.currentTimeMillis() - titleStartTime > 500) {
+                if (150 < btnSelectX && btnSelectX < 330 && H * 3 / 5 + 100 < btnSelectY && btnSelectY < H * 3 / 5 + 130) {
+                    playSE(pressbtnID);
+                    rs.showLeaderBoards();
                 }
             }
 
