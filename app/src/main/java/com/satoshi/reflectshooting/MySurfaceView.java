@@ -23,6 +23,7 @@ import android.view.View;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.games.Games;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -110,7 +111,7 @@ public class MySurfaceView  extends SurfaceView
     // インタースティシャル用のView
     static View viewAd = null;
 
-
+    private boolean scoreSend = false;
 
 
     /////コンストラクタ/////
@@ -141,7 +142,7 @@ public class MySurfaceView  extends SurfaceView
         itemFast = BitmapFactory.decodeResource(r, R.drawable.itemfast);
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            soundPool = new SoundPool(15, AudioManager.STREAM_MUSIC, 0);
+            soundPool = new SoundPool(30, AudioManager.STREAM_MUSIC, 0);
         } else {
             audioAttributes = new AudioAttributes.Builder()
                     .setUsage(AudioAttributes.USAGE_GAME)
@@ -149,7 +150,7 @@ public class MySurfaceView  extends SurfaceView
                     .build();
             soundPool = new SoundPool.Builder()
                     .setAudioAttributes(audioAttributes)
-                    .setMaxStreams(4)
+                    .setMaxStreams(30)
                     .build();
         }
 
@@ -576,6 +577,9 @@ public class MySurfaceView  extends SurfaceView
                 g.setColor(Color.WHITE);
                 g.drawBitmap(back, 0, 0);
                 g.setTextSize(40);
+
+                if(scoreSend == false) Games.Leaderboards.submitScore(googleApiClient,CgkIwr-QjMAKEAIQAA, score);
+
                 g.drawText("Score: " + score, W/5, H/2);
                 g.unlock();
             }
