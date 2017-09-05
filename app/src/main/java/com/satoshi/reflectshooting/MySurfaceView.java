@@ -553,13 +553,13 @@ public class MySurfaceView  extends SurfaceView
                     scene = S_GAMEOVER;
                     goverStartTime = System.currentTimeMillis();
                     stopBGM();
-                    rs.sendScore(score);
                     ranking[10] = score;
                     rankSort(ranking);
                     for (int i = 0; i < 10; i++) {
                         editor.putInt(rankKey[i], ranking[i]);
                         editor.apply();
                     }
+                    rs.sendScore(score);
                 }
             } else if (scene == S_PAUSE) {
                 g.lock();

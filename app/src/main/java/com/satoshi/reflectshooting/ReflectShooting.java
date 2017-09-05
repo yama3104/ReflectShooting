@@ -96,6 +96,7 @@ public class ReflectShooting extends Activity
 
     @Override
     public void onConnected(Bundle bundle) {
+        Log.d("debug", "connected!!!");
         Toast.makeText(this, String.format("ログインしました"), Toast.LENGTH_SHORT).show();
     }
 
@@ -128,6 +129,7 @@ public class ReflectShooting extends Activity
     }
 
     public void showLeaderBoards(){
+        Log.d("debug", ""+mGoogleApiClient.isConnected());
         if (mGoogleApiClient.isConnected()){
             startActivityForResult(Games.Leaderboards.getLeaderboardIntent(mGoogleApiClient,"CgkIwr-QjMAKEAIQAA"),10);
         }
