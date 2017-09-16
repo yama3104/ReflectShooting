@@ -97,7 +97,15 @@ public class ReflectShooting extends Activity
     @Override
     public void onConnected(Bundle bundle) {
         Log.d("debug", "connected!!!");
-        Toast.makeText(this, String.format("ログインしました"), Toast.LENGTH_SHORT).show();
+        // プレイヤー情報取得
+        Player p = Games.Players.getCurrentPlayer(mGoogleApiClient);
+
+        // 試しにプレイヤー名を表示
+        String displayName = "???";
+        if (p != null) {
+            displayName = p.getDisplayName();
+        }
+        Toast.makeText(this, String.format("%s ログインしました", displayName), Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -123,15 +131,15 @@ public class ReflectShooting extends Activity
     }
 
     public void sendScore(int score){
-        if (mGoogleApiClient.isConnected()) {
+        //if (mGoogleApiClient.isConnected()) {
             Games.Leaderboards.submitScore(mGoogleApiClient,"CgkIwr-QjMAKEAIQAA", score);
-        }
+        //}
     }
 
     public void showLeaderBoards(){
-        Log.d("debug", ""+mGoogleApiClient.isConnected());
-        if (mGoogleApiClient.isConnected()){
+        //Log.d("debug", ""+mGoogleApiClient.isConnected());
+        //if (mGoogleApiClient.isConnected()){
             startActivityForResult(Games.Leaderboards.getLeaderboardIntent(mGoogleApiClient,"CgkIwr-QjMAKEAIQAA"),10);
-        }
+        //}
     }
 }
