@@ -676,7 +676,7 @@ public class MySurfaceView  extends SurfaceView
             if (System.currentTimeMillis() - goverStartTime > 1000) {
                 if(touchX<150 || 330<touchX || touchY<480 || 560<touchY) {
                     Log.d("debug", "" + interstitialAd.isLoaded());
-                    if (interstitialAd.isLoaded() && (int)(Math.random()*100) % 3 == 0) {
+                    if (interstitialAd.isLoaded()) { //&& (int)(Math.random()*100) % 3 == 0) {
                         interstitialAd.show();
                     }
                     scene = S_TITLE;

@@ -15,6 +15,8 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.games.Games;
 import com.google.android.gms.games.Player;
+
+import static android.R.id.content;
 //import com.google.android.gms.*;
 //import com.google.example.games.basegameutils.BaseGameUtils;
 
@@ -25,8 +27,8 @@ import com.google.android.gms.games.Player;
 public class ReflectShooting extends Activity
         implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
-    private GoogleApiClient mGoogleApiClient;
-    private boolean mIntentInProgress;
+    private static GoogleApiClient mGoogleApiClient;
+    private static boolean mIntentInProgress;
 
     @Override
     public void onCreate(Bundle bundle) {
@@ -40,7 +42,7 @@ public class ReflectShooting extends Activity
                 .addApi(Games.API).addScope(Games.SCOPE_GAMES)
                 .build();
 
-        Log.d("debug", "created!!!!!!!!!!!");
+        //if(mGoogleApiClient == null) Log.d("debug", "nullnullnullnullnullnullnullnullnullnullnullnullnullnull");
     }
 
     @Override
@@ -49,6 +51,8 @@ public class ReflectShooting extends Activity
         MySurfaceView mySV = new MySurfaceView(this);
 
         mGoogleApiClient.connect();
+        //if(mGoogleApiClient == null) Log.d("debug", "nullnullnullnullnullnullnullnullnullnullnullnullnullnull");
+
 
         mySV.loadInterstitial();
         Log.d("debug", "onStart");
@@ -135,29 +139,26 @@ public class ReflectShooting extends Activity
     }
 
     public void sendScore(int score){
-        Log.d("debug", "submited!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        if(!mGoogleApiClient.isConnected()) {
+            Log.d("debug", "connected¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥");
+            mGoogleApiClient.connect();
+        }
 
         if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
+            Log.d("debug", "submited!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
             Games.Leaderboards.submitScore(mGoogleApiClient,"CgkIwr-QjMAKEAIQAA", score);
         }
     }
 
     public void showLeaderBoards(){
-        if(mGoogleApiClient == null) Log.d("debug", "connected*******************");
-        if(mGoogleApiClient.isConnected()) Log.d("debug", "connected¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥");
-
-        //if (mGoogleApiClient != null && mGoogleApiClient.isConnected()){
-            //startActivityForResult(Games.Leaderboards.getLeaderboardIntent(mGoogleApiClient,"CgkIwr-QjMAKEAIQAA"),1337);
-        //}
-
-        Intent myLeaderboard = Games.Leaderboards.getLeaderboardIntent(mGoogleApiClient,"CgkIwr-QjMAKEAIQAA");
-
-        if (myLeaderboard==null){
-            myLeaderboard = Games.Leaderboards.getLeaderboardIntent(mGoogleApiClient,"CgkIwr-QjMAKEAIQAA");
+        if(mGoogleApiClient == null) Log.d("debug", "nullnullnullnullnullnullnullnullnullnullnullnullnullnull");
+        if(!mGoogleApiClient.isConnected()) {
+            Log.d("debug", "connected¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥");
+            mGoogleApiClient.connect();
         }
 
-        myLeaderboard.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-        startActivityForResult(myLeaderboard, 10);
-
+        if (mGoogleApiClient != null && mGoogleApiClient.isConnected()){
+            startActivityForResult(Games.Leaderboards.getLeaderboardIntent(mGoogleApiClient,"CgkIwr-QjMAKEAIQAA"),100);
+        }
     }
 }
