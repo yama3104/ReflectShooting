@@ -7,9 +7,10 @@ android {
         applicationId "com.satoshi.reflectshooting"
         minSdkVersion 15
         targetSdkVersion 26
-        versionCode 7       //ここを１増やす
-        versionName "1.12" //ここは自由に増やす
+        versionCode 9      //ここを１増やす
+        versionName "1.14" //ここは自由に増やす
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -27,6 +28,8 @@ dependencies {
     compile 'com.android.support:appcompat-v7:26.+'
     compile 'com.google.android.gms:play-services-ads:11.0.2'
     compile 'com.google.android.gms:play-services-games:11.0.2'
+
+    //compile project(':BaseGameUtils')
 
     testCompile 'junit:junit:4.12'
 }

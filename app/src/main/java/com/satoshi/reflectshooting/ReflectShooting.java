@@ -15,13 +15,15 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.games.Games;
 import com.google.android.gms.games.Player;
+//import com.google.android.gms.*;
+//import com.google.example.games.basegameutils.BaseGameUtils;
 
 /**
  * Created by Satoshi on 2017/01/05.
  */
 
 public class ReflectShooting extends Activity
-        implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener{
+        implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     private GoogleApiClient mGoogleApiClient;
     private boolean mIntentInProgress;
@@ -37,6 +39,8 @@ public class ReflectShooting extends Activity
                 .addOnConnectionFailedListener(this)
                 .addApi(Games.API).addScope(Games.SCOPE_GAMES)
                 .build();
+
+        Log.d("debug", "created!!!!!!!!!!!");
     }
 
     @Override
@@ -105,7 +109,7 @@ public class ReflectShooting extends Activity
         if (p != null) {
             displayName = p.getDisplayName();
         }
-        Toast.makeText(this, String.format("%s ログインしました", displayName), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, String.format("%s でログインしました", displayName), Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -131,15 +135,29 @@ public class ReflectShooting extends Activity
     }
 
     public void sendScore(int score){
-        //if (mGoogleApiClient.isConnected()) {
+        Log.d("debug", "submited!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+
+        if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
             Games.Leaderboards.submitScore(mGoogleApiClient,"CgkIwr-QjMAKEAIQAA", score);
-        //}
+        }
     }
 
     public void showLeaderBoards(){
-        //Log.d("debug", ""+mGoogleApiClient.isConnected());
-        //if (mGoogleApiClient.isConnected()){
-            startActivityForResult(Games.Leaderboards.getLeaderboardIntent(mGoogleApiClient,"CgkIwr-QjMAKEAIQAA"),10);
+        if(mGoogleApiClient == null) Log.d("debug", "connected*******************");
+        if(mGoogleApiClient.isConnected()) Log.d("debug", "connected¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥");
+
+        //if (mGoogleApiClient != null && mGoogleApiClient.isConnected()){
+            //startActivityForResult(Games.Leaderboards.getLeaderboardIntent(mGoogleApiClient,"CgkIwr-QjMAKEAIQAA"),1337);
         //}
+
+        Intent myLeaderboard = Games.Leaderboards.getLeaderboardIntent(mGoogleApiClient,"CgkIwr-QjMAKEAIQAA");
+
+        if (myLeaderboard==null){
+            myLeaderboard = Games.Leaderboards.getLeaderboardIntent(mGoogleApiClient,"CgkIwr-QjMAKEAIQAA");
+        }
+
+        myLeaderboard.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        startActivityForResult(myLeaderboard, 10);
+
     }
 }
